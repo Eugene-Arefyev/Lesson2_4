@@ -1,9 +1,3 @@
-# Абсолютный путь / Относительный путь!
-# Для управления путями в Питоне есть библиотека os
-
-
-
-
 
 # заготовка для домашней работы
 # прочитайте про glob.glob
@@ -47,7 +41,6 @@
 # не забываем организовывать собственный код в функции
 # на зачёт с отличием, использовать папку 'Advanced Migrations'
 
-import glob
 import os.path
 
 
@@ -55,11 +48,16 @@ migrations = 'Migrations'
 
 
 def filter_files(files, mask):
-    return [file for file in files if mask.lower() in file.lower()]
+    filtered = []
+    for file in files:
+        with open(file, "r") as f:
+            if mask.lower() in f.read().lower():
+                filtered.append(file)
+    return filtered
 
 
 def get_all_sql_files(dirpath):
-    return glob.glob(os.path.join(dirpath, "*.sql"))
+    return [f"{dirpath}\\{filename}" for filename in os.listdir(dirpath) if ".sql" in filename]
 
 
 def print_files(files):
